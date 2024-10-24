@@ -16,15 +16,15 @@ jobs:
         run: flake8 .
 
   unit-test:
-  needs: python-formatting
-  runs-on: ubuntu-latest
-  steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-    - name: Install pytest
-      run: pip install pytest
-    - name: run pytest
-      run: pytest .
+    needs: python-formatting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install pytest
+        run: pip install pytest
+      - name: run pytest
+        run: pytest .
 
   deploy-to-impaas:
     needs: python-formatting
