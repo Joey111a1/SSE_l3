@@ -17,5 +17,18 @@ def submit():
 def process_query(content):
     if content == "dinosaurs":
         return "Dinosaurs ruled the Earth 200 million years ago"
-    if content == "asteroids":
+    elif content == "asteroids":
         return "Unknown"
+    else:
+        return "Unrecorded query, sorry"
+
+
+@app.route("/query", methods=["GET"])
+def query_route():
+    query_param = request.args.get("q")
+    
+    if query_param:
+        result = process_query(query_param)
+        return result
+    else:
+        return "No query parameter required", 400
