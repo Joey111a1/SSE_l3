@@ -26,7 +26,7 @@ def process_query(content):
 @app.route("/query", methods=["GET"])
 def query_route():
     query_param = request.args.get("q")
-    
+
     if query_param:
         result = process_query(query_param)
         return result
