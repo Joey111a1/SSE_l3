@@ -15,7 +15,7 @@ def submit():
 
 
 def process_query(content):
-  if content == "dinosaurs":
-    return "Dinosaurs ruled the Earth 200 million years ago"
-  if content == "asteroids":
-    return "Unknown"
+    if content == "dinosaurs":
+        return "Dinosaurs ruled the Earth 200 million years ago"
+    if content == "asteroids":
+        return "Unknown"

@@ -27,7 +27,7 @@ jobs:
         run: pytest .
 
   deploy-to-impaas:
-    needs: python-formatting
+    needs: python-formatting unit-test
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
