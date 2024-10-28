@@ -19,8 +19,9 @@ def process_query(content):
         return "Dinosaurs ruled the Earth 200 million years ago"
     elif content == "asteroids":
         return "Unknown"
-    else:
-        return "Unrecorded query, sorry"
+    elif content == "What is your name?":
+        return "qz824"
+    return "Unrecorded query, sorry"
 
 
 @app.route("/query", methods=["GET"])
