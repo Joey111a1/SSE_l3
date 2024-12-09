@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import os
 import polars as pl
-import configparser
+# import configparser
 from adbc_driver_postgresql import dbapi
 import secrets
 import requests
@@ -10,19 +10,19 @@ import xml.etree.ElementTree as ET
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
 
-# Below are local configuration -- sadly cannot use them online
-config = configparser.ConfigParser()
-config.read('config.ini')
-db_host = config.get('database', 'host')
-db_port = config.get('database', 'port')
-db_user = config.get('database', 'user')
-db_password = config.get('database', 'password')
-db_name = config.get('database', 'database')
-conn = dbapi.connect(f"postgresql://{db_user}:{db_password}"
-                     f"@{db_host}:{db_port}/{db_name}")
-# # online configuration
-# DATABASE_URL = os.environ.get('DATABASE_URL')
-# conn = dbapi.connect(DATABASE_URL)
+# # Below are local configuration -- sadly cannot use them online
+# config = configparser.ConfigParser()
+# config.read('config.ini')
+# db_host = config.get('database', 'host')
+# db_port = config.get('database', 'port')
+# db_user = config.get('database', 'user')
+# db_password = config.get('database', 'password')
+# db_name = config.get('database', 'database')
+# conn = dbapi.connect(f"postgresql://{db_user}:{db_password}"
+#                      f"@{db_host}:{db_port}/{db_name}")
+# online configuration
+DATABASE_URL = os.environ.get('DATABASE_URL')
+conn = dbapi.connect(DATABASE_URL)
 
 cur = conn.cursor()
 
