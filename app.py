@@ -20,6 +20,8 @@ app.secret_key = secrets.token_hex(16)
 # db_name = config.get('database', 'database')
 
 DATABASE_URL = os.environ.get('DATABASE_URL')
+# to check whether url is obtained
+print("DATABASE_URL is:", os.environ.get('DATABASE_URL'))
 
 # conn = dbapi.connect(f"postgresql://{db_user}:{db_password}
 # @{db_host}:{db_port}/{db_name}")
