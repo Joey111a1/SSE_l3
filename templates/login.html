@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login</title>
+    <link rel="icon" href="../static/Faith.ico">
+</head>
+<body>
+    <h1>Login</h1>
+    <a href="{{ url_for('index') }}" style="color: black">Home</a><br><br>
+    {% if error %}
+        <p style="color:red;">{{ error }}</p>
+    {% endif %}
+    <form method="POST">
+        <label for="username">Username: </label><input id="username" name="username" type="text" required><br>
+        <label for="password">Password: </label><input id="password" name="password" type="password" required><br>
+        <button type="submit">Login</button>
+    </form>
+    <p><a href="{{ url_for('signin') }}" style="color: black">Don't have an account? Sign in</a></p>
+    <p><a href="{{ url_for('reset_password') }}" style="color: black">Forgot password? Reset here</a></p>
+</body>
+</html>

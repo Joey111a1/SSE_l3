@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Edit Text</title>
+    <link rel="icon" href="../static/relife.ico">
+</head>
+<body>
+    <h2>Find Works by Artist</h2>
+    <a href="{{ url_for('index') }}" style="color: black">Home</a><br><br>
+
+    <form method="POST" action="{{ url_for('search_artist') }}">
+        <label for="artist">Artist Name:</label><br>
+        <input type="text" id="artist" name="artist" value="{{ artist }}" required>
+        <input type="hidden" name="page" value="edit_text/{{ text_id }}">
+        <button type="submit">Search</button>
+    </form>
+
+    {% if titles %}
+        <h3>Select a Work to Get Information</h3>
+        <form method="POST" action="{{ url_for('get_work_info') }}">
+            <label for="works">Select a Work:</label><br>
+            <select id="works" name="work_id" required>
+                <option value="" disabled selected>Select a work</option>
+                {% for title, w_id in titles %}
+                    <option value="{{ w_id }}"
+                        {% if w_id == selected_work_id %}selected{% endif %}>
+                        {{ title }}
+                    </option>
+                {% endfor %}
+            </select>
+            <input type="hidden" name="artist" value="{{ artist }}">
+            <input type="hidden" name="page" value="edit_text/{{ text_id }}">
+            <button type="submit">Get Info</button>
+        </form>
+    {% elif artist %}
+        <p>No works found for "{{ artist }}". Please try another artist.</p>
+    {% endif %}
+
+    {% if work_info %}
+    <div>
+        <h3>Related Info for Selected Work</h3>
+        {% if work_info.error %}
+            <p style="color:red;">{{ work_info.error }}</p>
+        {% elif work_info.relations %}
+            <ul>
+                {% for relation in work_info.relations %}
+                    <li>
+                        <strong>Name:</strong> {{ relation.name }}<br>
+                        <strong>a.k.a:</strong> {{ relation.sort_name }}<br>
+                        <strong>Role:</strong> {{ relation.relation_type }}<br>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No related artists found for this work.</p>
+        {% endif %}
+    </div>
+
+    <iframe src="https://listenbrainz.org/player/?recording_mbids={{ recording_id }}" width="600" height="300" title="Music Player"></iframe>
+    {% endif %}
+
+    <h1>Edit text here</h1>
+
+    <form method="POST">
+        <textarea name="content" rows="50" cols="75">{{ content }}</textarea><br>
+        <button type="submit">Save</button>
+    </form>
+
+</body>
+</html>

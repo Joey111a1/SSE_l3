@@ -10,8 +10,8 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: 3.12
-      - name: Install flake8
-        run: pip install flake8
+      - name: Install requirements
+        run: pip install -r requirements.txt
       - name: Run flake8
         run: flake8 .
 
@@ -21,10 +21,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Install pytest
-        run: pip install pytest
-      - name: Install flask
-        run: pip install flask
       - name: run pytest
         run: pytest .
 
@@ -37,6 +33,6 @@ jobs:
     - name: ImPaaS-Deploy
       uses: /impaas/impaas-deploy@v3
       with:
-        app-name: qz824-sse-app-l2
+        app-name: qz824-sse-app-l3
         deployment-token: ${{ secrets.IMPAAS_DEPLOY_TOKEN }}
         method: PLATFORM
