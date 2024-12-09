@@ -3,6 +3,8 @@ on: [push]
 jobs:
   python-formatting:
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -18,6 +20,8 @@ jobs:
   deploy-to-impaas:
     needs: python-formatting
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
     steps:
     - name: Checkout
       uses: actions/checkout@v4
