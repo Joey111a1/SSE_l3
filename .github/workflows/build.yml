@@ -21,12 +21,11 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
-    - name: Set DATABASE_URL
-      env:
-        DATABASE_URL: ${{ secrets.DATABASE_URL }}
     - name: ImPaaS-Deploy
-      uses: /impaas/impaas-deploy@v3
+      uses: impaas/impaas-deploy@v3
       with:
         app-name: qz824-sse-app-l3
         deployment-token: ${{ secrets.IMPAAS_DEPLOY_TOKEN }}
         method: PLATFORM
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
