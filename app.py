@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import os
 import polars as pl
-# import configparser
+import configparser
 from adbc_driver_postgresql import dbapi
 import secrets
 import requests
@@ -10,22 +10,20 @@ import xml.etree.ElementTree as ET
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
 
-# Load configuration
-# config = configparser.ConfigParser()
-# config.read('config.ini')
-# db_host = config.get('database', 'host')
-# db_port = config.get('database', 'port')
-# db_user = config.get('database', 'user')
-# db_password = config.get('database', 'password')
-# db_name = config.get('database', 'database')
+# Below are local configuration -- sadly cannot use them online
+config = configparser.ConfigParser()
+config.read('config.ini')
+db_host = config.get('database', 'host')
+db_port = config.get('database', 'port')
+db_user = config.get('database', 'user')
+db_password = config.get('database', 'password')
+db_name = config.get('database', 'database')
+conn = dbapi.connect(f"postgresql://{db_user}:{db_password}"
+                     f"@{db_host}:{db_port}/{db_name}")
+# # online configuration
+# DATABASE_URL = os.environ.get('DATABASE_URL')
+# conn = dbapi.connect(DATABASE_URL)
 
-DATABASE_URL = os.environ.get('DATABASE_URL')
-# to check whether url is obtained
-print("DATABASE_URL is:", os.environ.get('DATABASE_URL'))
-
-# conn = dbapi.connect(f"postgresql://{db_user}:{db_password}
-# @{db_host}:{db_port}/{db_name}")
-conn = dbapi.connect(DATABASE_URL)
 cur = conn.cursor()
 
 create_users_table = """
@@ -47,6 +45,7 @@ CREATE TABLE IF NOT EXISTS texts (
 cur.execute(create_texts_table)
 conn.commit()
 
+# deal with the special data structure on musicbrainz
 namespaces = {'ns': 'http://musicbrainz.org/ns/mmd-2.0#'}
 
 
@@ -147,6 +146,8 @@ def get_work_information(work_id):
     return {"relations": relations}
 
 
+# This is necessary since the api has different ids
+# for a piece of work and its corresponding recordings
 def get_recordings_for_work(work_id: str) -> str:
     recordings_url = f"https://musicbrainz.org/ws/2/" \
                      f"recording?work={work_id}&limit=1&fmt=xml"
@@ -267,6 +268,9 @@ def delete_text(text_id):
     return redirect(url_for('index'))
 
 
+# This function and the one under it has to fit
+# in both add and edit text page
+# so there has to be a way to distinguish them
 @app.route('/search_artist', methods=['POST'])
 def search_artist():
     artist = request.form.get('artist', '').strip()
