@@ -4,7 +4,10 @@
 # def test_knows_about_dinosaurs():
 #     assert process_query("dinosaurs") == "Dinosaurs ruled the \
 # Earth 200 million years ago"
-# from app import app
+
+import app
+
+
 #
 #
 # def client():
@@ -35,3 +38,5 @@
 #     response = client.get('/signin')
 #     assert response.status_code == 200
 #     assert b'User already exists' not in response.data  # Just a random check
+def check_namespace():
+    assert app.namespaces == "namespaces = {'ns': 'http://musicbrainz.org/ns/mmd-2.0#'}"
