@@ -5,7 +5,7 @@
 #     assert process_query("dinosaurs") == "Dinosaurs ruled the \
 # Earth 200 million years ago"
 
-import app
+namespaces = "{'ns': 'http://musicbrainz.org/ns/mmd-2.0#'}"
 
 
 #
@@ -37,7 +37,8 @@ import app
 # def test_signin_page(client):
 #     response = client.get('/signin')
 #     assert response.status_code == 200
-#     assert b'User already exists' not in response.data  # Just a random check
+# #   Just a random check
+#     assert b'User already exists' not in response.data
 def check_namespace():
-    assert app.namespaces == "namespaces = " \
+    assert namespaces == "namespaces = " \
                              "{'ns': 'http://musicbrainz.org/ns/mmd-2.0#'}"
