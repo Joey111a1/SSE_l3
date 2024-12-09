@@ -21,8 +21,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Install pytest
-        run: pip install pytest
+      - name: Install requirements
+        run: pip install -r requirements.txt
       - name: run pytest
         run: pytest .
 
