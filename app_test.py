@@ -10,7 +10,8 @@ from app import app
 def client():
     # Set up the Flask test client
     app.config['TESTING'] = True
-    # If your app relies on session, database, or other envs, you might need to mock them here
+    # If your app relies on session, database, or other envs,
+    # you might need to mock them here
     with app.test_client() as client:
         yield client
 
@@ -26,7 +27,8 @@ def test_index_page(client):
 def test_login_page(client):
     response = client.get('/login')
     assert response.status_code == 200
-    assert b'username' in response.data  # assuming login page has a field 'username'
+    # assuming login page has a field 'username'
+    assert b'username' in response.data
 
 
 def test_signin_page(client):
