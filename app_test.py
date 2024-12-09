@@ -39,4 +39,5 @@ import app
 #     assert response.status_code == 200
 #     assert b'User already exists' not in response.data  # Just a random check
 def check_namespace():
-    assert app.namespaces == "namespaces = {'ns': 'http://musicbrainz.org/ns/mmd-2.0#'}"
+    assert app.namespaces == "namespaces = " \
+                             "{'ns': 'http://musicbrainz.org/ns/mmd-2.0#'}"
